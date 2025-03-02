@@ -12,9 +12,9 @@ import '../overrideClasses.css';
 export const BoxButton = ({ idx, value, extFuc, label, format }) => {
 
     const styleLabel = (title = false) => ({
-        marginBlock: title ? '1rem' : '0.5rem',
+        marginBlock:  title ? '0.75vh' : '0.55vh',
         paddingInline: '0.5rem',
-        fontSize: '25px',
+        fontSize: 'clamp(12px, 1.5vw, 25px)',
         textAlign: 'center',
         fontWeight: title ? 'bold' : 'normal'
     })
@@ -23,7 +23,7 @@ export const BoxButton = ({ idx, value, extFuc, label, format }) => {
 
     useEffect(() => {
         setValue(format(value[label]))
-    }, [value[label]])
+    }, [label,format,value])
 
     const handleClick = (e, idx, label) => {
         e.preventDefault()

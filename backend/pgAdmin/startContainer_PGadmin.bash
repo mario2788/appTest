@@ -14,7 +14,7 @@ sudo docker run -d \
 
 
 
-# http://localhost:5050⁠
+# http://localhost:8080
 
 # PGADMIN_USER for user name (default value is admin@pgadmin.org)
 # PGADMIN_PASSWORD for password (default value is pgadmin)

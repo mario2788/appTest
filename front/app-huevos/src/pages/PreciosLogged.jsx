@@ -38,13 +38,13 @@ const PreciosLogged = () => {
         alignItems: 'center',
         justifyContent: 'center',
         width: '70%',
-        height: '80vh',
+        height: '75vh',
         p: 2
     }
 
     const styleLabel = (title = false) => ({
-        marginBlock: title ? '1rem' : '0.5rem',
-        fontSize: '25px',
+        marginBlock: title ? '0.9vh' : '0.75vh',
+        fontSize: 'clamp(12px, 1.5vw, 25px)',
         textAlign: 'center',
         fontWeight: title ? 'bold' : 'normal'
     })
@@ -54,7 +54,7 @@ const PreciosLogged = () => {
         bgcolor: idx % 2 ? 'background.overPaper' : 'background.default',
         color: idx % 2 ? 'text.secondary' : 'text.primary',
         borderRadius: '0.5rem',
-        marginBlock: '0.25rem'
+        marginBlock: '0.25vh'
     })
 
     const [preciosHuevos, setPreciosHuevos] = useState([{
@@ -106,11 +106,6 @@ const PreciosLogged = () => {
             const currentPreciosHuevos = preciosHuevosRef.current;
 
             if (currentUpdateIndex.length > 0) {
-                console.log(
-                    'Abandonando la página :: updateIndex',
-                    currentUpdateIndex,
-                    currentUpdateIndex.map((i) => currentPreciosHuevos[i])
-                );
                 const resp = await updatePrecios(currentUpdateIndex.map((i) => currentPreciosHuevos[i]));
                 console.log(resp);
             } else {

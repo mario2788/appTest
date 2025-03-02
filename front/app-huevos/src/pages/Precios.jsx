@@ -26,26 +26,25 @@ const Precios = () => {
         alignItems: 'center',
         justifyContent: 'center',
         width: '50%',
-        height: '80vh',
+        height: '75vh',
         p: 2
     }
 
     const styleLabel = (title = false) => ({
-        paddingInline: '1rem',
+        paddingInline: '1vh',
         paddingLeft: '5rem',
-        marginBlock: title ? '1rem' : '0.5rem',
-        fontSize: '25px',
+        marginBlock: title ? '0.9vh' : '0.75vh',
+        fontSize:  'clamp(12px, 1.5vw, 25px)',
         textAlign: 'start',
         fontWeight: title ? 'bold' : 'normal'
     })
 
     const styleRenglon = (idx) => ({
-        // bgcolor: idx % 2 ? 'background.overPaper' : 'background.default',
-        // color: idx % 2 ? 'text.secondary' : 'text.primary',
+        bgcolor: idx % 2 ? 'background.overPaper' : 'background.default',
+        color: idx % 2 ? 'text.secondary' : 'text.primary',
         borderRadius: '0.5rem',
         marginBlock: '0.25rem'
     })
-
 
     const [preciosHuevos, setPreciosHuevos] = useState([
         { tipo_huevo: 'Tipo huevo', precio_venta: 'Precio' }
@@ -57,7 +56,6 @@ const Precios = () => {
             setPreciosHuevos([...preciosHuevos, ...preciosData])
         })()
     }, [])
-
 
     return (
         <Box sx={styleBox}>
