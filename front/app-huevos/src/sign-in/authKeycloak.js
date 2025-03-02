@@ -9,7 +9,7 @@ export const authKeycloak = async (data) => {
 
     const urlencoded = new URLSearchParams();
     urlencoded.append("grant_type", "password");
-    urlencoded.append("client_id", "appClient");
+    urlencoded.append("client_id", process.env.REACT_APP_CLIENT_ID);
     urlencoded.append("username", username);
     urlencoded.append("password", password);
 
@@ -20,8 +20,8 @@ export const authKeycloak = async (data) => {
         redirect: "follow"
     };
 
-    const url = "https://cysceuci.com/auth/realms/app/protocol/openid-connect/token/"
-    
+    const url = `${process.env.REACT_APP_URL}/realms/${process.env.REACT_APP_REALM}/protocol/openid-connect/token/`
+
     try {
 
         const resp = await fetch(url, requestOptions)

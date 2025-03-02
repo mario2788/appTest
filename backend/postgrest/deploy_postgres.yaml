@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres-app-huevos
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres-app-huevos
+  template:
+    metadata:
+      labels:
+        app: postgres-app-huevos
+    spec:
+      containers:
+        - name: postgres
+          image: postgres:14
+          env:
+            - name: POSTGRES_USER
+              value: augustUser_postgres
+            - name: POSTGRES_PASSWORD
+              value: augustUser_postgres_pass_2024Sep26
+            - name: POSTGRES_DB
+              value: apphuevos_db
+          ports:
+            - containerPort: 5454
+          volumeMounts:
+            - name: data
+              mountPath: /var/lib/postgresql/data
+            - name: initscript
+              mountPath: /docker-entrypoint-initdb.d/init-user-db.bash
+      volumes:
+        - name: data
+          hostPath:
+            path: /home/mario/appTest/backend/postgrest/postgresData
+        - name: initscript
+          hostPath:
+            path: /home/mario/appTest/backend/postgrest/init-user-db.bash
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres-service
+spec:
+  selector:
+    app: postgres
+  ports:
+    - name: postgres
+      protocol: TCP
+      port: 5432
+      targetPort: 5432
+  type: ClusterIP

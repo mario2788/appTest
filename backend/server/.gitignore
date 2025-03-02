@@ -1,0 +1,13 @@
+
+logs_server.code-workspace
+
+node_modules/
+postgres/postgresData/
+
+postgres/pgAdmin/postgres_dataDB
+postgres/pgAdmin/servers.json
+postgres/pgAdmin/data
+
+
+.env.development
+.env.production

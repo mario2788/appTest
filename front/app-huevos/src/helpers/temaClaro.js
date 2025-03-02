@@ -14,7 +14,8 @@ const temaClaro = createTheme({
         },
         background: {
             default: '#f2c147', // Fondo claro
-            paper: '#ffffff', // Fondo de elementos como tarjetas
+            paper: '#e8dede;', // Fondo de elementos como tarjetas
+            overPaper: '#c2c2c2'
         },
         text: {
             primary: '#4777f2', // Texto principal en modo claro

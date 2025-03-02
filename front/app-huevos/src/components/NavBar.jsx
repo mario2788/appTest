@@ -31,15 +31,15 @@ export const NavBar = ({ setTheme, theme }) => {
         p: 1,
     }
 
-    const handleclick = async () => {
-        const flagLogout = await logoutKeycloak(logged.token)
-        console.log("flagLogout", flagLogout);
-        if(flagLogout){
-            dispatch( setLogged({
-                state: false,
-                token: null
-            }) )
-        }
+    const handleclick = () => {
+
+        dispatch(setLogged({
+            state: false,
+            token: null
+        }))
+        localStorage.clear()
+
+        logoutKeycloak(logged.token)
     }
 
     return (
@@ -55,13 +55,13 @@ export const NavBar = ({ setTheme, theme }) => {
                         alignItems: "center"
                     }}
                 >
-                    {   
-                        
-                        [   ['home', 'precios', 'rutas','login'],
-                            ['home', 'precios', 'rutas',
-                                'rutas en casas', 
-                                'rutas en tiendas'
-                            ]
+                    {
+
+                        [['home', 'precios', 'rutas', 'login'],
+                        ['home', 'precios', 'rutas',
+                            'rutas en casas',
+                            'rutas en tiendas'
+                        ]
                         ][logged.state & 1].map((label, idx) =>
                             <Box key={idx}>
                                 <Link to={`/${label.replace(/\s+/g, "")}`} >

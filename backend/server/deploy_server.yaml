@@ -1,0 +1,79 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+    name: app-logs-pv
+spec:
+    capacity:
+        storage: 1Gi
+    accessModes:
+        - ReadWriteOnce
+    storageClassName: microk8s-hostpath
+    hostPath:
+        path: /home/ubuntu/logs_server/
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+    name: app-logs-pvc
+spec:
+    accessModes:
+        - ReadWriteOnce
+    resources:
+        requests:
+            storage: 1Gi
+    storageClassName: microk8s-hostpath
+    volumeName: app-logs-pv
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: server-logs
+spec:
+    replicas: 1
+    strategy:
+        type: RollingUpdate
+        rollingUpdate:
+            maxUnavailable: 1
+            maxSurge: 1
+    selector:
+        matchLabels:
+            app: server-logs
+    template:
+        metadata:
+            labels:
+                app: server-logs
+        spec:
+            containers:
+                - name: node-app
+                  image: node:23-alpine3.19
+                  workingDir: /app
+                  command: ["sh", "start_server.sh"]
+                  resources:
+                      limits:
+                          memory: "512Mi"
+                          cpu: "500m"
+                      requests:
+                          memory: "256Mi"
+                          cpu: "250m"
+                  volumeMounts:
+                      - name: app-volume
+                        mountPath: /app
+            volumes:
+                - name: app-volume
+                  persistentVolumeClaim:
+                      claimName: app-logs-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+    name: server-logs
+spec:
+    selector:
+        app: server-logs
+    ports:
+        - protocol: TCP
+          port: 8595
+          targetPort: 8595
+    type: ClusterIP

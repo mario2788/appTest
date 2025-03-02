@@ -2,13 +2,15 @@
 
 import { createSlice } from '@reduxjs/toolkit'
 
+const stateFromLocalStorage = () => {
+    const state = localStorage.getItem('state')
+    return state ? JSON.parse(state) : { state: false, token: '' }
+}
+
 export const loggedSlice = createSlice({
     name: 'loggedStore',
     initialState: {
-        value: {
-            state: false,
-            token: ''
-        },
+        value: stateFromLocalStorage(),
     },
     reducers: {
         setLogged: (state, action) => {

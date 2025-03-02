@@ -15,6 +15,7 @@ const temaOscuro = createTheme({
         background: {
             default: '#121212', // Fondo oscuro
             paper: '#1e1e1e', // Fondo de elementos como tarjetas
+            overPaper: '#656565'
         },
         text: {
             primary: '#ffffff', // Texto principal en modo oscuro

@@ -1,52 +1,26 @@
 
 
-
-export const logOutKeycloak = () => { }
-
-
-/**
- * Cierra la sesión en Keycloak
- * @param {string} token - El token de acceso obtenido previamente
- * @param {string} redirectUri - (Opcional) URI a la que redirigir después del logout
- * @returns {Promise<boolean>} - true si el logout fue exitoso, false en caso contrario
- */
-export const logoutKeycloak = async(token, redirectUri = null) => {
+export const logoutKeycloak = async (token) => {
 
     const myHeaders = new Headers();
-    myHeaders.append("Accept", "*/*");
-    myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
-    myHeaders.append("Authorization", `Bearer ${token}`);
+    myHeaders.append("Content-Type", "application/json");
 
-    const urlencoded = new URLSearchParams();
-    urlencoded.append("client_id", "appClient");
-
-    // Si se proporciona una URI de redirección, agregarla a los parámetros
-    if (redirectUri) {
-        urlencoded.append("redirect_uri", redirectUri);
-    }
+    const raw = JSON.stringify({ token });
 
     const requestOptions = {
         method: "POST",
         headers: myHeaders,
-        body: urlencoded,
+        body: raw,
         redirect: "follow"
     };
 
-    const baseUrl = "https://cysceuci.com/auth/realms/app/protocol/openid-connect/logout";
-
     try {
-        const response = await fetch(baseUrl, requestOptions);
+        const resp = await fetch(`${process.env.REACT_APP_SERVER_URL}/logout`, requestOptions)
+        resp.data = await resp.json()
 
-        if (response.ok) {
-            // response.data = await response.json()
-            console.log("Sesión cerrada exitosamente", response);
-            return true;
-        } else {
-            console.log(`Error al cerrar sesión: ${response.status}`);
-            return false;
-        }
+        return resp.data.data.closes
+
     } catch (error) {
-        console.error("logoutKeycloak: error", error);
-        return false;
+        console.log("logoutKeycloak ::", error);
     }
 }

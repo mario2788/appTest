@@ -93,12 +93,8 @@ export default function SignIn(props) {
 			event.preventDefault();
 			return;
 		}
-		
+
 		const data = new FormData(event.currentTarget);
-		console.log({
-			username: data.get('username'),
-			password: data.get('password'),
-		});
 
 		const authToken = await authKeycloak({
 			username: data.get('username'),
@@ -110,6 +106,12 @@ export default function SignIn(props) {
 				state: true,
 				token: authToken
 			}));
+
+			localStorage.setItem('state', JSON.stringify({
+				state: true,
+				token: authToken
+			}))
+
 			navigate('/home');
 			return
 		}

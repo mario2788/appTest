@@ -6,7 +6,7 @@ import { Routes, Route, Link, Outlet } from "react-router-dom";
 import Box from '@mui/material/Box';
 import { ThemeProvider } from '@mui/material/styles';
 
-// Redux store
+// Redux Store
 import { useSelector } from "react-redux";
 
 // helpers
@@ -16,6 +16,7 @@ import temaOscuro from './helpers/temaOscuro';
 //componentes
 import { NavBar } from './components/NavBar';
 import SignIn from './sign-in/SignIn';
+import PreciosLogged from './pages/PreciosLogged';
 const Home = lazy(() => import("./pages/Home"));
 const Rutas = lazy(() => import("./pages/Rutas"));
 const Precios = lazy(() => import("./pages/Precios"));
@@ -24,10 +25,8 @@ const Precios = lazy(() => import("./pages/Precios"));
 // Componente principal de la aplicación
 function App() {
 
-	const [theme, setTheme] = useState('light')
-	// const path = useSelector(state => state.pathStore.value)
 	const logged = useSelector(state => state.loggedStore.value)
-	console.log("logged-home", logged);
+	const [theme, setTheme] = useState('light')
 
 	const styleBox = {
 		fontFamily: 'Roboto',
@@ -69,16 +68,26 @@ function App() {
 							</React.Suspense>
 						}
 					/>
-
-					<Route
-						path="/precios"
-						element={
-							<React.Suspense fallback={<>...</>}>
-								<Precios />
-							</React.Suspense>
-						}
-					/>
-
+					{
+						logged.state ?
+							<Route
+								path="/precios"
+								element={
+									<React.Suspense fallback={<>...</>}>
+										<PreciosLogged />
+									</React.Suspense>
+								}
+							/>
+							:
+							<Route
+								path="/precios"
+								element={
+									<React.Suspense fallback={<>...</>}>
+										<Precios />
+									</React.Suspense>
+								}
+							/>
+					}
 					<Route
 						path="/login"
 						element={
