@@ -20,7 +20,9 @@ class ServerClass {
         this.testPath = '/test'
         this.logout = '/logout'
         this.precios = '/precios'
+        this.rutas = '/rutas'
         this.updatePrecios = '/updatePrecios'
+        this.direcciones = '/direcciones'
 
         // Middlewares
         this.middlewares()
@@ -57,6 +59,8 @@ class ServerClass {
         this.app.use(`${this.basePath}${this.logout}`, require('../routes/logout_route'))
         this.app.use(`${this.basePath}${this.precios}`, require('../routes/precios_huevos_route'))
         this.app.use(`${this.basePath}${this.updatePrecios}`, require('../routes/update_precios_route'))
+        this.app.use(`${this.basePath}${this.rutas}`, require('../routes/rutas_route'))
+        this.app.use(`${this.basePath}${this.direcciones}`, require('../routes/direcciones_route'))
     }
 
     listen() {

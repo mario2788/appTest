@@ -11,58 +11,26 @@ import { setLogged } from '../redux/slices/logged';
 // Mui
 import Box from '@mui/material/Box';
 
-export const Login = () => {
+// Components
+import SignIn from '../sign-in/SignIn';
 
-    const dispatch = useDispatch()
-    const [authenticated, setAuthenticated] = useState(false)
 
-    // Keycloak
-    const auth_keycloak = async () => {
-
-        try {
-
-            const keyData = {
-                url: process.env.REACT_APP_URL,
-                realm: process.env.REACT_APP_REALM,
-                clientId: process.env.REACT_APP_CLIENT_ID
-            }
-
-            const keycloak = new Keycloak({ ...keyData });
-            window.kck_sindro = keycloak;
-
-            const authenticationReady = await keycloak.init({ onLoad: 'login-required' });
-
-            setAuthenticated(authenticationReady)
-
-        } catch (error) {
-            console.error('Failed to initialize adapter:', error.error);
-            return false
-        }
-    }
-
-    useEffect(() => {
-        (async function aux() {
-            if (!authenticated) await auth_keycloak();
-            dispatch(setLogged(true))
-
-        })()
-    }, [])
-
+const Login = ({ theme }) => {
 
     const styleBox = {
-        width: '100%',
-        alignItems: 'center',
+        height: '90vh',
+        alignItems: 'start',
         justifyContent: 'center',
         bgcolor: 'background.default',
         color: 'text.primary',
-        p: 3
     }
 
     return (
         <Box sx={styleBox}>
-            <h3>
-                Cargando Keycloak...
-            </h3>
+            <SignIn theme={theme} />
         </Box>
     )
 }
+
+
+export default Login

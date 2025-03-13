@@ -9,7 +9,7 @@ import Grid from '@mui/material/Grid2';
 import { getPrecios } from '../request/getPrecios';
 
 
-const Precios = () => {
+const Precios = (props) => {
 
     const styleBox = {
         height: '86vh',
@@ -23,18 +23,16 @@ const Precios = () => {
 
     const stylePaper = {
         display: 'flex',
-        alignItems: 'center',
+        alignItems: 'start',
         justifyContent: 'center',
-        width: '50%',
+        width: props.inner ? '80%' : '50%',
         height: '75vh',
         p: 2
     }
 
     const styleLabel = (title = false) => ({
-        paddingInline: '1vh',
-        paddingLeft: '5rem',
-        marginBlock: title ? '0.9vh' : '0.75vh',
-        fontSize:  'clamp(12px, 1.5vw, 25px)',
+        marginBlock: title ? '2vh' : '0.75vh',
+        fontSize: 'clamp(12px, 1.5vw, 25px)',
         textAlign: 'start',
         fontWeight: title ? 'bold' : 'normal'
     })
@@ -43,17 +41,25 @@ const Precios = () => {
         bgcolor: idx % 2 ? 'background.overPaper' : 'background.default',
         color: idx % 2 ? 'text.secondary' : 'text.primary',
         borderRadius: '0.5rem',
-        marginBlock: '0.25rem'
+        marginBlock: '0.5vh',
+        textAlign: 'start',
+        paddingLeft: '3vh',
     })
 
     const [preciosHuevos, setPreciosHuevos] = useState([
         { tipo_huevo: 'Tipo huevo', precio_venta: 'Precio' }
     ])
 
+    const [message, setMessage] = useState({ state: false })
+
     useEffect(() => {
         (async function aux() {
             const preciosData = await getPrecios()
-            setPreciosHuevos([...preciosHuevos, ...preciosData])
+            if (preciosData.length > 0) {
+                setPreciosHuevos([...preciosHuevos, ...preciosData]);
+            } else {
+                setMessage({ state: true })
+            }
         })()
     }, [])
 
@@ -66,7 +72,7 @@ const Precios = () => {
                     direction="row"
                     sx={{
                         justifyContent: "flex-center",
-                        alignItems: "center"
+                        alignItems: "start"
                     }}
                 >
                     {
@@ -79,7 +85,7 @@ const Precios = () => {
                                 direction="row"
                                 sx={{
                                     justifyContent: "flex-start",
-                                    alignItems: "center",
+                                    alignItems: "start",
                                     ...styleRenglon(idx)
                                 }}
                             >
@@ -99,6 +105,13 @@ const Precios = () => {
                                 </Grid>
                             </Grid>
                         )
+                    }
+                    {
+                        message.state
+                        &&
+                        <Box sx={{ textAlign: 'center', width: '100%' }}>
+                            Sin conexión
+                        </Box>
                     }
                 </Grid>
             </Paper>

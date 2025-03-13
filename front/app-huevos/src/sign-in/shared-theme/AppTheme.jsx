@@ -10,7 +10,9 @@ import { surfacesCustomizations } from './customizations/surfaces';
 import { colorSchemes, typography, shadows, shape } from './themePrimitives';
 
 function AppTheme(props) {
+
 	const { children, theme } = props;
+
 	// const { children, disableCustomTheme, themeComponents } = props;
 	// const theme = React.useMemo(() => {
 	// 	return disableCustomTheme

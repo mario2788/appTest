@@ -2,7 +2,7 @@
 
 const { Router } = require('express');
 const { response } = require('express');
-const { get_precios } = require('../api_postgres/get_precios');
+const { get_precios } = require('../api_postgres/precios/get_precios');
 
 const router = Router();
 

@@ -1,6 +1,7 @@
 
 
-export const updatePrecios = async (row) => {
+
+export const addRuta = async (row) => {
 
     const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
@@ -15,7 +16,7 @@ export const updatePrecios = async (row) => {
     };
 
     try {
-        const resp = await fetch(`${process.env.REACT_APP_SERVER_URL}/updatePrecios`, requestOptions)
+        const resp = await fetch(`${process.env.REACT_APP_SERVER_URL}/rutas`, requestOptions)
 
         if (resp.ok) {
             resp.data = await resp.json()

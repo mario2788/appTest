@@ -1,6 +1,6 @@
 const axios = require('axios');
 const qs = require('qs');
-
+const { errorHandler } = require('axios-error-handler');
 
 const getTokenAdmin = async () => {
 
@@ -25,7 +25,7 @@ const getTokenAdmin = async () => {
     const resp = await axios.request(config)
         .then((resp) => resp.data.access_token)
         .catch((error) =>
-            console.log("getTokenAdmin :: error:", error.response.status)
+            console.log("getTokenAdmin :: error:", error.message)
         );
 
     // console.log("getTokenAdmin", resp.access_token)

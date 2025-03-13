@@ -3,22 +3,22 @@ import { useNavigate } from 'react-router-dom';
 
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import Checkbox from '@mui/material/Checkbox';
 import CssBaseline from '@mui/material/CssBaseline';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Divider from '@mui/material/Divider';
 import FormLabel from '@mui/material/FormLabel';
 import FormControl from '@mui/material/FormControl';
-import Link from '@mui/material/Link';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
 import MuiCard from '@mui/material/Card';
 import { styled } from '@mui/material/styles';
 import ForgotPassword from './components/ForgotPassword';
-import AppTheme from './shared-theme/AppTheme';
+import AppTheme from './shared-theme/AppTheme.jsx';
 import ColorModeSelect from './shared-theme/ColorModeSelect';
 import { authKeycloak } from './authKeycloak';
+// import Link from '@mui/material/Link';
+// import Checkbox from '@mui/material/Checkbox';
+// import FormControlLabel from '@mui/material/FormControlLabel';
+// import Divider from '@mui/material/Divider';
 // import { GoogleIcon, FacebookIcon, SitemarkIcon } from './components/CustomIcons';
 
 // Redux store
@@ -46,8 +46,8 @@ const Card = styled(MuiCard)(({ theme }) => ({
 }));
 
 const SignInContainer = styled(Stack)(({ theme }) => ({
-	height: 'calc((1 - var(--template-frame-height, 0)) * 100dvh)',
-	minHeight: '100%',
+	// height: 'calc((1 - var(--template-frame-height, 0)) * 100dvh)',
+	// minHeight: '100%',
 	padding: theme.spacing(2),
 	[theme.breakpoints.up('sm')]: {
 		padding: theme.spacing(4),
@@ -69,6 +69,7 @@ const SignInContainer = styled(Stack)(({ theme }) => ({
 }));
 
 export default function SignIn(props) {
+
 	const navigate = useNavigate();
 	const dispath = useDispatch()
 
@@ -220,7 +221,7 @@ export default function SignIn(props) {
 						>
 							Sign in
 						</Button>
-						<Link
+						{/* <Link
 							component="button"
 							type="button"
 							onClick={handleClickOpen}
@@ -228,7 +229,7 @@ export default function SignIn(props) {
 							sx={{ alignSelf: 'center' }}
 						>
 							Forgot your password?
-						</Link>
+						</Link> */}
 					</Box>
 					{/* <Divider>or</Divider>
 					<Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>

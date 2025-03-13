@@ -35,7 +35,7 @@ const PreciosLogged = () => {
 
     const stylePaper = {
         display: 'flex',
-        alignItems: 'center',
+        alignItems: 'start',
         justifyContent: 'center',
         width: '70%',
         height: '75vh',
@@ -43,10 +43,11 @@ const PreciosLogged = () => {
     }
 
     const styleLabel = (title = false) => ({
-        marginBlock: title ? '0.9vh' : '0.75vh',
+        marginBlock: title ? '2vh' : '0.75vh',
         fontSize: 'clamp(12px, 1.5vw, 25px)',
-        textAlign: 'center',
-        fontWeight: title ? 'bold' : 'normal'
+        textAlign: 'start',
+        fontWeight: title ? 'bold' : 'normal',
+        paddingLeft: '3vh',
     })
 
     const styleRenglon = (idx) => ({
@@ -54,31 +55,35 @@ const PreciosLogged = () => {
         bgcolor: idx % 2 ? 'background.overPaper' : 'background.default',
         color: idx % 2 ? 'text.secondary' : 'text.primary',
         borderRadius: '0.5rem',
-        marginBlock: '0.25vh'
+        marginBlock: '0.5vh'
     })
 
     const [preciosHuevos, setPreciosHuevos] = useState([{
         tipo_huevo: 'Tipo huevo',
-        valor_compra: 'Valor compra',
+        valor_compra: 'Vlr. compra',
         porcentaje: 'Porcentaje',
-        precio_venta: 'Valor venta'
+        precio_venta: 'Vlr. venta'
     }])
 
     const [updateIndex, setUpdateIndex] = useState([])
 
+    const [message, setMessage] = useState({
+        state: false,
+        msn: ''
+    })
+
     const updateValue = {
         'porcentaje': (i, n) => {
-            preciosHuevos[i]['precio_venta'] = parseInt(preciosHuevos[i]['valor_compra'] * (1 + n / 100))
-            preciosHuevos[i]['valor_compra'] = parseInt(preciosHuevos[i]['valor_compra'])
+            preciosHuevos[i]['precio_venta'] = parseInt(preciosHuevos[i]['valor_compra'] / (1 - n / 100))
             preciosHuevos[i]['porcentaje'] = n
         },
         'precio_venta': (i, n) => {
-            preciosHuevos[i]['porcentaje'] = parseInt((n / preciosHuevos[i]['valor_compra'] - 1) * 100)
-            preciosHuevos[i]['valor_compra'] = parseInt(preciosHuevos[i]['valor_compra'])
+            preciosHuevos[i]['porcentaje'] = parseInt((n - preciosHuevos[i]['valor_compra']) / n * 100)
+            // preciosHuevos[i]['valor_compra'] = parseInt(preciosHuevos[i]['valor_compra'])
             preciosHuevos[i]['precio_venta'] = n
         },
         'valor_compra': (i, n) => {
-            preciosHuevos[i]['precio_venta'] = parseInt(n * (1 + preciosHuevos[i]['porcentaje'] / 100))
+            preciosHuevos[i]['precio_venta'] = parseInt(n / (1 - preciosHuevos[i]['porcentaje'] / 100))
             preciosHuevos[i]['valor_compra'] = n
         }
     }
@@ -90,11 +95,9 @@ const PreciosLogged = () => {
         })()
     }, [])
 
-    // Usamos useRef para mantener una referencia mutable a los valores actualizados
     const updateIndexRef = useRef(updateIndex);
     const preciosHuevosRef = useRef(preciosHuevos);
 
-    // Actualizamos las referencias cada vez que el estado cambia
     useEffect(() => {
         updateIndexRef.current = updateIndex;
         preciosHuevosRef.current = preciosHuevos;
@@ -107,9 +110,6 @@ const PreciosLogged = () => {
 
             if (currentUpdateIndex.length > 0) {
                 const resp = await updatePrecios(currentUpdateIndex.map((i) => currentPreciosHuevos[i]));
-                console.log(resp);
-            } else {
-                console.log(currentUpdateIndex);
             }
         };
 
@@ -124,7 +124,6 @@ const PreciosLogged = () => {
             setPreciosHuevos([...preciosHuevos])
 
             if (updateIndex.indexOf(i) === -1) {
-                console.log("updateIndex", [...updateIndex, i]);
                 setUpdateIndex([...updateIndex, i])
             }
         }
@@ -176,19 +175,26 @@ const PreciosLogged = () => {
                                         [idx, objPrecio, 'valor_compra', validarDinero],
                                         [idx, objPrecio, 'porcentaje', validarPorcentaje],
                                         [idx, objPrecio, 'precio_venta', validarDinero]
-                                    ].map((obj, id) =>
+                                    ].map(([idx, obj, label, func], id) =>
                                         <BoxButton
                                             key={id}
-                                            idx={obj[0]}
-                                            value={obj[1]}
-                                            label={obj[2]}
-                                            format={obj[3]}
+                                            idx={idx}
+                                            value={obj[label]}
+                                            label={label}
+                                            format={func}
                                             extFuc={handleChange}
                                         />
                                     )
                                 }
                             </Grid>
                         )
+                    }
+                    {
+                        message.state
+                        &&
+                        <Box sx={{ textAlign: 'center', width: '100%' }}>
+                            {message.msn}
+                        </Box>
                     }
                 </Grid>
             </Paper>

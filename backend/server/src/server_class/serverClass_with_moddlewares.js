@@ -8,7 +8,7 @@ const rateLimit = require('express-rate-limit');
 const csrf = require('csrf');
 const cookieParser = require('cookie-parser');
 
-middlewares
+// middlewares
 const { keycloakTokenVerify } = require('../middlewares/keycloakTokenVerify');
 const { makeCookieCSRF } = require('../middlewares/makeCookieCSRF');
 const { csrfTokenVerify } = require('../middlewares/csrfTokenVerify');

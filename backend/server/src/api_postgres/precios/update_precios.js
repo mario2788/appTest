@@ -1,5 +1,5 @@
 
-const pool = require("./create_pool");
+const pool = require("../create_pool");
 
 const update_precios = async (data) => {
 

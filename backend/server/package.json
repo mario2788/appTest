@@ -16,6 +16,7 @@
   "license": "ISC",
   "dependencies": {
     "axios": "^1.7.7",
+    "axios-error-handler": "^1.0.1",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
     "csrf": "^3.1.0",

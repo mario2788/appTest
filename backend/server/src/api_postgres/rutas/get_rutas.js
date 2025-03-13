@@ -1,13 +1,14 @@
 
-const pool = require("./create_pool");
 
-const get_precios = async () => {
+const pool = require("../create_pool");
+
+const get_rutas = async () => {
 
     // Consulta SQL para obtener los datos
     const query = `
-      SELECT tipo_huevo, precio_venta, valor_compra, porcentaje
-      FROM precio_huevos
-      ORDER BY tipo_huevo;
+      SELECT barrio, dias
+      FROM rutas
+      ORDER BY barrio;
     `;
 
     // Ejecutar la consulta
@@ -15,13 +16,12 @@ const get_precios = async () => {
         const result = await pool.query(query);
         return result.rows
     } catch (error) {
-        console.log("get_precios :: error", error);
+        console.log("get_rutas :: error", error);
         return false
     }
-
 }
 
 
 module.exports = {
-    get_precios
+    get_rutas
 }

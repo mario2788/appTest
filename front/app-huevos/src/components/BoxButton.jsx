@@ -12,26 +12,24 @@ import '../overrideClasses.css';
 export const BoxButton = ({ idx, value, extFuc, label, format }) => {
 
     const styleLabel = (title = false) => ({
-        marginBlock:  title ? '0.75vh' : '0.55vh',
+        marginBlock: title ? '0.75vh' : '0.55vh',
         paddingInline: '0.5rem',
         fontSize: 'clamp(12px, 1.5vw, 25px)',
         textAlign: 'center',
         fontWeight: title ? 'bold' : 'normal'
     })
 
-    const [valueField, setValue] = useState(value[label])
+    const [valueField, setValue] = useState(value)
 
     useEffect(() => {
-        setValue(format(value[label]))
-    }, [label,format,value])
+        setValue(format(value))
+    }, [label, format, value])
 
     const handleClick = (e, idx, label) => {
         e.preventDefault()
 
         const value = format(e.target.value)
-
         setValue(value)
-
         extFuc(value, idx, label)
     }
 
@@ -43,7 +41,7 @@ export const BoxButton = ({ idx, value, extFuc, label, format }) => {
             >
                 {
                     idx === 0
-                        ? value[label]
+                        ? value
                         :
                         <TextField
                             label=""
